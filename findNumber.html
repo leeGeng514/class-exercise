@@ -8,12 +8,16 @@
 <script>
     var str = 'sdfg223432222224fgfd3342323765766676766000sdfs000sdfs';
 
+    //首先将字符串转数组 然后排序后 转回字符串  得到有序的string
 //    str = str.split('').sort().join('');
-//    console.log(str);
+    //申明一个存储出现次数的变量
 //    var min = -Infinity;
+    //存储出现过的字符串
 //    var index = '';
-//
+//    使用replace方法  利用正则去匹配重复子项
 //    str.replace(/(\w)\1+/ig, function ($0, $1) {
+    // $0 是匹配到的字符串   判断:判断如果匹配到的字符的长度大于 min 将值赋给 min
+    // $1 是第一个子项 也就是出现过的字符
 //        if ($0.length > min) {
 //            min = $0.length;
 //            index = $1;
