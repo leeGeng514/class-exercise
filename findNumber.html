@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var str = 'sdfg223432222224fgfd3342323765766676766000sdfs000sdfs';
+
+//    str = str.split('').sort().join('');
+//    console.log(str);
+//    var min = -Infinity;
+//    var index = '';
+//
+//    str.replace(/(\w)\1+/ig, function ($0, $1) {
+//        if ($0.length > min) {
+//            min = $0.length;
+//            index = $1;
+//        }
+//    });
+//
+//    console.log('出现次数最多的字符是:' + index + '.出现过:' + min + '次.');
+    var json={};
+    var min=-Infinity;
+    var index='';
+
+    for(var i=0;i<str.length;i++){
+        if(!json[str[i]]){
+            json[str[i]]=1;
+        }else{
+            json[str[i]]++;
+        }
+    }
+
+    for(var key in json){
+        if(json[key]>min){
+            min=json[key];
+            index=key;
+        }
+    }
+    console.log('出现次数最多的字符是:' + index + '.出现过:' + min + '次.');
+</script>
+</body>
+</html>
