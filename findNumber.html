@@ -25,11 +25,17 @@
 //    });
 //
 //    console.log('出现次数最多的字符是:' + index + '.出现过:' + min + '次.');
+
+    //申明一个空对象 用来存找到的字符串
     var json={};
+    //最小值
     var min=-Infinity;
+    //出现过的字符串
     var index='';
 
+    //遍历 字符串
     for(var i=0;i<str.length;i++){
+        //判断如果json 不存在
         if(!json[str[i]]){
             json[str[i]]=1;
         }else{

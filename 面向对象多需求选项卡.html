@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .active {
+            background: yellow;
+        }
+
+        .active {
+            background: yellow;
+        }
+
+        #box1 div, #box2 div {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            display: none;
+        }
+
+        #box1 div.show, #box2 div.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="box1">
+    <button class="active">按钮一</button>
+    <button>按钮二</button>
+    <button>按钮三</button>
+    <div class="show">1111111</div>
+    <div>22222222222</div>
+    <div>3333333333333</div>
+</div>
+<div id="box2">
+    <button class="active">按钮一</button>
+    <button>按钮二</button>
+    <button>按钮三</button>
+    <div class="show">1111111</div>
+    <div>22222222222</div>
+    <div>3333333333333</div>
+</div>
+
+<section id="container">
+    <!-- 点击它让第一个停 -->
+    <button id="btn1">按钮一</button>
+    <!-- 点击它让第二个开 -->
+    <button id="btn2">按钮二</button>
+    <!-- 点击它都关,再点一下都开 -->
+    <button id="btn3">按钮三</button>
+    <!-- 点击它开的关，关的开 -->
+    <button id="btn4">按钮四</button>
+    <!-- 倒着轮播 -->
+    <button id="btn5">按钮五</button>
+</section>
+
+
+<script>
+    class Tab {
+        constructor(id) {
+            this.box = document.getElementById(id);
+            this.btns = this.box.getElementsByTagName('button');
+            this.content = this.box.getElementsByTagName('div');
+            this.number = 0;
+            this.timer = null;
+        }
+
+        Event() {
+            var _this = this;
+            for (var i = 0; i < this.btns.length; i++) {
+                this.btns[i].index = i;
+                this.btns[i].addEventListener('click', function () {
+                    _this.Tabs(this.index);
+                }, false);
+            }
+        }
+
+        Tabs(index) {
+            for (var i = 0; i < this.btns.length; i++) {
+                this.btns[i].className = this.content[i].className = '';
+            }
+            this.btns[index].className = 'active';
+            this.content[index].className = 'show';
+        }
+
+        AutoPlay() {
+            var _this = this;
+            clearInterval(_this.timer);
+            _this.timer = setInterval(function () {
+                _this.number++;
+                _this.Tabs(_this.number %= _this.btns.length);
+            }, 1000);
+        }
+
+        Stop() {
+            clearInterval(this.timer);
+            this.timer = null;
+        }
+
+        Back() {
+            var _this = this;
+            clearInterval(this.timer);
+            this.timer = setInterval(function () {
+                _this.number--;
+                _this.number = (_this.number < 0 ? _this.btns.length - 1 : _this.number);
+                _this.Tabs(_this.number);
+            }, 1000);
+        }
+    }
+
+    var box1 = new Tab('box1');
+    var box2 = new Tab('box2');
+    box1.AutoPlay();
+    box1.Event();
+    box2.Event();
+
+    /*
+    *   <!-- 点击它让第一个停 -->
+        <button id="btn1">按钮一</button>
+        <!-- 点击它让第二个开 -->
+        <button id="btn2">按钮二</button>
+        <!-- 点击它都关,再点一下都开 -->
+        <button id="btn3">按钮三</button>
+        <!-- 点击它开的关，关的开 -->
+        <button id="btn4">按钮四</button>
+        <!-- 倒着轮播 -->
+        <button id="btn5">按钮五</button>
+    *
+    *
+    *
+    * */
+    var container = document.getElementById('container');
+    var btns = container.getElementsByTagName('button');
+
+    btns[0].onclick = function () {
+        box1.Stop();
+    };
+    btns[1].onclick = function () {
+        box2.AutoPlay();
+    };
+    btns[2].onclick = function () {
+        if (!this.onOff) {
+            box1.Stop();
+            box2.Stop();
+        } else {
+            box1.AutoPlay();
+            box2.AutoPlay();
+        }
+        this.onOff = !this.onOff;
+    };
+    btns[3].onclick = function () {
+        if (box1.timer) {
+            box1.Stop();
+//            clearInterval(box1.timer);
+        } else {
+            box1.AutoPlay();
+        }
+        if (box2.timer) {
+            box2.Stop();
+//            clearInterval(box2.timer);
+        } else {
+            box2.AutoPlay();
+        }
+    };
+    btns[4].onOff=true;
+    btns[4].onclick = function () {
+        if(this.onOff){
+            box1.Back();
+            box2.Back();
+        }else{
+            box1.AutoPlay();
+            box2.AutoPlay();
+        }
+        this.onOff=!this.onOff;
+    }
+
+
+</script>
+</body>
+</html>
