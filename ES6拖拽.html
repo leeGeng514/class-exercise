@@ -2,18 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        div{
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-    </style>
+    <title>Document</title>
+<style>
+#box{
+    width:100px;
+    height: 100px;
+    background: red;
+    position: absolute;
+    top:0;
+    left:0;
+}
+</style>
 </head>
 <body>
-<div id="box1"></div>
+    sdsadsadjhsjdhsa
+    <div id="box"></div>
 <script>
+    class Drag{
+        constructor(id){
+            this.box=document.getElementById(id);
+            this.disY=0;
+            this.disX=0;
+        }
+        init(){
+            var _this=this;
+            this.box.addEventListener('mousedown',init,false);
+            function init(ev) {
+                _this.down(ev);
+            }
+        }
+        down(ev){
+            var _this=this;
+            this.disY=ev.clientY-this.box.offsetTop;
+            this.disX=ev.clientX-this.box.offsetLeft;
+            document.onmousemove=function (ev) {
+                _this.move(ev);
+            };
+            document.onmouseup=function () {
+                _this.up(ev);
+            }
+        }
+        move(ev){
+            console.log(ev.clientY);
+            this.box.style.top=ev.clientY-this.disY+'px';
+            this.box.style.left=ev.clientX-this.disX+'px';
+        }
+        up(){
+            document.onmousemove=document.onmouseup=null;
+        }
+
+    }
+
+    //感觉有点小bug 
+
+//    Drag.prototype.init = function(){
+//        var _this = this;
+//        this.box.onmousedown = function(){
+//            _this.down(ev);
+//        }
+//    }
+//    Drag.prototype.down = function(ev){
+//        var _this = this;
+//        this.disX = ev.clientX - this.box.offsetLeft;
+//        this.disY = ev.clientY - this.box.offsetTop;
+//
+//        document.onmousemove = function(ev){
+//            _this.move(ev);
+//        }
+//        document.onmouseup = function(){
+//            _this.up();
+//        }
+//    }
+//    Drag.prototype.move = function(ev){
+//        this.box.style.left = ev.clientX - this.disX + 'px';
+//        this.box.style.top = ev.clientY - this.disY + 'px';
+//    }
+//    Drag.prototype.up = function(ev){
+//        document.onmousemove = document.onmouseup = null;
+//    }
+    var d = new Drag('box');
+
+    d.init();
+
+
+
 </script>
 </body>
 </html>
