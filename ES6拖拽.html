@@ -40,7 +40,8 @@
             };
             document.onmouseup=function () {
                 _this.up(ev);
-            }
+            };
+            ev.preventDefault();
         }
         move(ev){
             console.log(ev.clientY);
@@ -53,7 +54,7 @@
 
     }
 
-    //感觉有点小bug 
+    //感觉有点小bug
 
 //    Drag.prototype.init = function(){
 //        var _this = this;

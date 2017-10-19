@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+
+        #box2 {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            left: 200px;
+        }
+        body{
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="box1"></div>
+<div id="box2"></div>
+<script>
+    //    class Drag{
+    //        constructor(id){
+    //            this.box=document.getElementById(id);
+    //            this.disX=0;
+    //            this.disY=0;
+    //        }
+    //        init(){
+    //            this.box.addEventListener('mousedown',(ev)=>{
+    //                this.down(ev);
+    //            },false);
+    //        }
+    //        down(ev){
+    //            var move=(ev)=>{
+    //                this.move(ev);
+    //            };
+    //            var up=()=>{
+    //                this.up(move,up);
+    //            };
+    //            this.disY=ev.clientY-this.box.offsetTop;
+    //            this.disX=ev.clientX-this.box.offsetLeft;
+    //            document.addEventListener('mousemove',move,false);
+    //            document.addEventListener('mouseup',up,false);
+    //            ev.preventDefault();
+    //        }
+    //        move(ev){
+    //            this.box.style.left=ev.clientX-this.disX+'px';
+    //            this.box.style.top=ev.clientY-this.disY+'px';
+    //        }
+    //        up(move,up){
+    //            document.removeEventListener('mousemove',move,false);
+    //            document.removeEventListener('mouseup',up,false);
+    //        }
+    //    }
+    //用es6 不知道该怎么继承了。。。
+
+
+    /****************** 华丽分割线 ***********************/
+
+    //Drag 构造函数
+    function Drag(id) {
+        this.box = document.getElementById(id);
+        this.disY = 0;
+        this.disX = 0;
+    }
+
+    Drag.prototype.init = function () {
+        this.box.addEventListener('mousedown', (ev) => {
+            this.down(ev);
+        }, false);
+    };
+
+    Drag.prototype.down = function (ev) {
+        this.disX = ev.clientX - this.box.offsetLeft;
+        this.disY = ev.clientY - this.box.offsetTop;
+        var move = (ev) => {
+            this.move(ev);
+        };
+        var up = () => {
+            this.up(move, up);
+        };
+        document.addEventListener('mousemove', move, false);
+        document.addEventListener('mouseup', up, false);
+        ev.preventDefault();
+    };
+
+    Drag.prototype.move = function (ev) {
+        this.box.style.left = ev.clientX - this.disX + 'px';
+        this.box.style.top = ev.clientY - this.disY + 'px';
+    };
+
+    Drag.prototype.up = function (move, up) {
+        document.removeEventListener('mousemove', move, false);
+        document.removeEventListener('mouseup', up, false);
+    };
+
+
+    //Drag2构造函数
+    function Drag2(id) {
+        //通过改变this指向,调用Drag 将Drag所有属性继承给Drag2
+        Drag.call(this, id);
+    }
+    //此函数相当于一个媒介 该构造函数new出来的对象实例的__proto__ 是等于  构造函数的prototype
+    //   Medium(obj).__proto__ 等于 Medium(fn).prototype
+    //   注意:  ***  new出来的对象实例是一个独立的内存空间,它可以通过原型链找到构造函数的原型
+    //         ***  但在自身下添加方法并不影响到构造函数 prototype 下的方法和属性
+    //
+    function Medium() {
+    }
+
+    Medium.prototype = Drag.prototype;
+    Drag2.prototype = new Medium;
+    Drag2.prototype.constructor = Drag2;
+
+    //Drag2自身的move方法
+    Drag2.prototype.move = function (ev) {
+        var l = ev.clientX - this.disX;
+        var t = ev.clientY - this.disY;
+        if (l <= 30) {
+            l = 0;
+        } else if (l >= window.innerWidth - this.box.offsetWidth - 30) {
+            l = window.innerWidth - this.box.offsetWidth;
+        } else if (t <= 30) {
+            t = 0;
+        } else if (t >= window.innerHeight - this.box.offsetHeight - 30) {
+            t = window.innerHeight - this.box.offsetHeight;
+        }
+        this.box.style.left = l + 'px';
+        this.box.style.top = t + 'px';
+    };
+
+
+    var div1 = new Drag('box1');
+    var div2 = new Drag2('box2');
+    div1.init();
+    div2.init();
+
+    console.log(Drag2.move);
+
+
+</script>
+</body>
+</html>
