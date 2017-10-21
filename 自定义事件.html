@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //订阅事件
+    function addEvent(obj,eventName,fn) {
+        //给obj自定义属性赋值，绑定过 就走绑定过的对象，如果没有给一个空对象
+        obj.event=obj.event || {};
+        //判断 obj的自定义属性下 有没有 eventName 这个key值,如果有 走这个 key值，如果没有给一个空数组
+        obj.event[eventName]= obj.event[eventName] || [];
+        //往 key值添加事件函数
+        obj.event[eventName].push(fn);
+    }
+    //触发器
+    function trigger(obj,eventName) {
+        //判断  obj.event[eventName] 是否为空 如果为空return,如果有内容 循环调用里面的函数
+        //     元素.自定义属性[事件名]:事件函数1,事件函数2,事件函数3...
+        //例如  document.event['长按']:fn1,fn2,fn3...
+        if (!obj.event[eventName]) return;
+        obj.event[eventName].forEach((e,i)=>{
+            e.call(obj);
+        });
+    }
+    //调用采集函数 添加事件
+    addEvent(document,'长按',function () {
+       alert('松开你的鼠标111');
+    });
+    // 采集函数(绑定事件的元素名称,要执行的事件函数)
+    addEvent(document,'长按',function () {
+        alert('松开你的鼠标222');
+    });
+    addEvent(document,'点击3次',function () {
+        alert('点击3次弹出');
+    });
+//    //根据业务逻辑来调用自定义事件  长按
+//    document.onmousedown=function () {
+//        var d=new Date;
+//        this.timer=setInterval(() =>{
+//            var d2=new Date;
+//            if(Math.ceil(d2-d)/1000>2){
+//                trigger(document,'长按');
+//                clearInterval(this.timer);
+//            }
+//        },14);
+//        document.onmouseup=function () {
+//            clearInterval(this.timer);
+//        }
+//    };
+    //点击3次
+    let i=0;
+    document.onclick=function () {
+        i++;
+        this.timer2=setTimeout(function () {
+            i=0;
+        },2000);
+        if (i>=3){
+            console.log(this);
+            trigger(this,'点击3次');
+            i=0;
+            clearTimeout(this.timer2);
+        }
+    }
+</script>
+</body>
+</html>

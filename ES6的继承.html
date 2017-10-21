@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="box1"></div>
+<div id="box2"></div>
+<script>
+    //新建一个类
+    class CreateDiv{
+        //构造函数   参数......
+        constructor(id,color,border,w,h){
+            //对象实例下的属性
+            this.box=document.getElementById(id);
+            this.color=color;
+            this.border=border;
+            this.w=w;
+            this.h=h;
+        }
+        //对象实例下的方法
+        changeColor(){
+            this.box.style.backgroundColor='green';
+        }
+        changeBorder(){
+            this.box.style.border='1px solid #000';
+        }
+        changeW(){
+            this.box.style.width='50px';
+        }
+        changeH(){
+            this.box.style.height='50px';
+        }
+    }
+    /* 用extends关键字实现继承, class 子类 extends 父类{
+                                    constructor(父类参数 *可以添加自身属性* 如果不写形参为undefined){
+                                        注意 super应写在最顶层, super 关键字代表父类的构造函数
+                                        super(父类参数 *可以添加自身属性* 如果不写形参为undefined);
+
+
+                                    }
+                                    自身的方法(){
+
+
+                                    }
+                              }
+
+
+
+
+     */
+
+
+
+    class CreateDiv2 extends CreateDiv{
+        constructor(id,color,border,w,h,txt){
+            super(id,color,border,w,h,txt);
+            this.txt=txt;
+        }
+        say(){
+            alert('我是div2自己的方法');
+        }
+    }
+
+    var div1=new CreateDiv('box1','green','10px solid #000','200px','200px');
+    var div2=new CreateDiv2('box2','green','10px solid #000','200px','200px','我是div2的属性');
+
+    div2.say();
+    div1.changeBorder();
+    div1.changeW();
+    div1.changeH();
+    div1.changeColor();
+    console.dir(div2.say);
+    console.dir(div1);
+</script>
+</body>
+</html>

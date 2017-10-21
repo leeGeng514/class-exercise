@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+
+        #box2 {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            left: 200px;
+        }
+        body{
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="box1"></div>
+<div id="box2"></div>
+<script>
+        class Drag{
+            constructor(id){
+                this.box=document.getElementById(id);
+                this.disX=0;
+                this.disY=0;
+            }
+            init(){
+                this.box.addEventListener('mousedown',(ev)=>{
+                    this.down(ev);
+                },false);
+            }
+            down(ev){
+                var move=(ev)=>{
+                    this.move(ev);
+                };
+                var up=()=>{
+                    this.up(move,up);
+                };
+                this.disY=ev.clientY-this.box.offsetTop;
+                this.disX=ev.clientX-this.box.offsetLeft;
+                document.addEventListener('mousemove',move,false);
+                document.addEventListener('mouseup',up,false);
+                ev.preventDefault();
+            }
+            move(ev){
+                this.box.style.left=ev.clientX-this.disX+'px';
+                this.box.style.top=ev.clientY-this.disY+'px';
+            }
+            up(move,up){
+                document.removeEventListener('mousemove',move,false);
+                document.removeEventListener('mouseup',up,false);
+            }
+        }
+
+        //继承父类
+        class Drag2 extends Drag{
+            constructor(id,text){
+                super(id,text);
+                this.text=text;
+            }
+            say(){
+                alert('我是Drag2自身的方法');
+            }
+            move(ev){
+                var l=ev.clientX-this.disX;
+                var t=ev.clientY-this.disY;
+                if(l<20){
+                    l=0;
+                }else if(l>window.innerWidth-this.box.offsetWidth-20){
+                    l=window.innerWidth-this.box.offsetWidth;
+                }else if(t<20){
+                    t=0;
+                }else if (t>window.innerHeight-this.box.offsetHeight-20){
+                    t=window.innerHeight-this.box.offsetHeight;
+                }
+                this.box.style.left=l+'px';
+                this.box.style.top=t+'px';
+            }
+        }
+
+        var div1=new Drag('box1');
+        var div2=new Drag2('box2','我是具有吸边效果的div');
+
+        div1.init();
+        div2.init();
+
+
+
+
+
+</script>
+</body>
+</html>
