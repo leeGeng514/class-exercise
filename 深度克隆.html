@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr=[3,5,7,4,7,[2,{name:'lee',age:27,sex:'男'},function () {alert(1)}],2,[2,3,4]];
+    
+    function deepClone(obj) {
+        var toString=Object.prototype.toString;
+        var arr=toString.call(obj)==='[object Object]'? {}:[];
+        for(var attr in obj){
+            if(typeof obj[attr]== 'object'){
+                arr[attr]=deepClone(obj[attr]);
+            }else{
+                arr[attr]=obj[attr];
+            }
+        }
+        return arr;
+    }
+
+    var arr2=deepClone(arr);
+    console.log(arr2);
+</script>
+</body>
+</html>

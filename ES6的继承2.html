@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class Person{
+        constructor(name,age,sex){
+            this.name=name;
+            this.age=age;
+            this.sex=sex;
+        }
+        sayName(){
+            console.log(this.name);
+        }
+    }
+
+    class CreatePerson extends Person{
+        constructor(name,age,sex,job){
+            super(name,age,sex);
+            this.job=job;
+        }
+        sayJob(){
+            console.log(this.job);
+        }
+    }
+    var per1=new Person('lee','28','男');
+    var per2=new CreatePerson('huang','23','女','医生');
+
+    console.dir(per1);
+    console.dir(per2);
+</script>
+</body>
+</html>

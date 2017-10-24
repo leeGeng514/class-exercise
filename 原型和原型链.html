@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Fn() {
+
+    }
+    Fn.prototype.say=function () {
+        alert('123');
+    };
+    Object.prototype.say=function () {
+        alert('fn123');
+    };
+    Function.prototype.say=function () {
+        alert('FN');
+    };
+    var f=new Fn;
+    Fn.say();
+    console.dir(Fn);
+</script>
+
+</body>
+</html>
