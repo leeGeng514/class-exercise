@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jsonp.js"></script>
+    <style>
+        body{
+            background:skyblue;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .pic{
+            width: 236px;
+            box-shadow:0 1px 3px rgba(0,0,0,.3);
+            overflow:hidden;
+            margin-top:10px;
+        }
+        img{
+            width:236px;
+            border: none;
+            display: block;
+        }
+        ul{
+            list-style: none;
+            margin: 0 auto;
+            /*border:1px solid #000;*/
+            width:1050px;
+            overflow: hidden;
+        }
+        li{
+            /*position: absolute;*/
+            border: 1px solid #ccc;
+            float: left;
+            margin: 8px;
+            width:236px;
+        }
+        #loading{
+            height: 65px;
+            width:100%;
+            text-align: center;
+            background: #fff;
+            position: fixed;
+            bottom:0;
+            display: none;
+        }
+        #loading img{
+            display: inline-block;
+            height: 65px;
+            width:65px;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul">
+    <li>
+        <!-- <div class="pic">
+          <img src="http:\/\/www.wookmark.com\/images\/original\/638518_wookmark.jpg">
+        </div>
+        <div class="pic">
+          <img src="http:\/\/www.wookmark.com\/images\/original\/638518_wookmark.jpg">
+        </div>
+        <div class="pic">
+              <img src="http:\/\/www.wookmark.com\/images\/original\/638518_wookmark.jpg">
+            </div> -->
+    </li>
+    <li>
+        <!-- <div class="pic">
+          <img src="http:\/\/www.wookmark.com\/images\/original\/638518_wookmark.jpg">
+        </div> -->
+    </li>
+    <li>
+        <!-- <div class="pic">
+          <img src="http:\/\/www.wookmark.com\/images\/original\/638518_wookmark.jpg">
+        </div> -->
+    </li>
+    <li>
+        <!-- <div class="pic">
+          <img src="http:\/\/www.wookmark.com\/images\/original\/638518_wookmark.jpg">
+        </div> -->
+    </li>
+</ul>
+<div id="loading">
+    <img src="1.gif">
+</div>
+<script>
+    const li=document.getElementsByTagName('li');
+    let num=0;
+    
+    jsonp({
+        data:{
+            page:0
+        },
+        url:'http://www.wookmark.com/api/json/popular',
+        callback:'callback',
+        success:function (data) {
+            console.log(data);
+        }
+    });
+</script>
+</body>
+</html>
