@@ -86,19 +86,59 @@
     <img src="1.gif">
 </div>
 <script>
-    const li=document.getElementsByTagName('li');
+    var loading=document.getElementById('loading');
+    //获取页面li 并且转成数组
+    const lis=Array.from(document.getElementsByTagName('li'));
+    //用来请求数据时的变量
     let num=0;
+    let onOff=true;
+
+
+    function watefall() {
+        loading.style.display='block';
+        onOff=false;
+        //调用jsonp函数
+        jsonp({
+            data:{
+                page:num    //请求数据时的变量
+            },
+            url:'http://www.wookmark.com/api/json/popular',  //请求数据的接口
+            callback:'callback',   //与后端约定的字段
+            success:function (data) {    //成功获取数据后的回调函数
+                console.log(data);
+                if(!data.length) return;
+                data.forEach((e,i)=>{
+                    let img=new Image;
+                    img.src=e.preview;
+                    img.onload=function () {
+                        let div=document.createElement('div');
+                        div.className='pic';
+                        let minLi=findMin();
+                        div.appendChild(img);
+                        minLi.appendChild(div);
+                    }
+                });
+                onOff=true;
+                loading.style.display='none';
+            }
+        });
+    }
+
+    document.onscroll=function () {
+
+    };
+
     
-    jsonp({
-        data:{
-            page:0
-        },
-        url:'http://www.wookmark.com/api/json/popular',
-        callback:'callback',
-        success:function (data) {
-            console.log(data);
-        }
-    });
+    
+    //找出最小的li函数
+    function findMin() {
+        var arr=[];
+        lis.forEach((e,i)=>{
+            arr.push(e.scrollHeight);
+        });
+        let min=Math.min.apply('',arr);
+        return lis[arr.findIndex(e=>e==min)];
+    }
 </script>
 </body>
 </html>

@@ -37,7 +37,8 @@ function jsonp(obj) {
     //添加script标签
     var os=document.createElement('script');
     //添加url加上传入的字段
-    os.scr= opt.url+'?'+queryString;
+    os.src= opt.url+'?'+queryString;
+
     document.getElementsByTagName('head')[0].appendChild(os);
     os.remove();
 }
