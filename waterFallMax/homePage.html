@@ -4,52 +4,59 @@
     <meta charset="utf-8">
     <title></title>
     <style>
-        body{
-            background:skyblue;
+        body {
+            background: skyblue;
         }
-        *{
+
+        * {
             margin: 0;
             padding: 0;
         }
-        .pic{
+
+        .pic {
             width: 236px;
-            box-shadow:0 1px 3px rgba(0,0,0,.3);
-            overflow:hidden;
-            margin-top:10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+            overflow: hidden;
+            margin-top: 10px;
         }
-        img{
-            width:236px;
+
+        img {
+            width: 236px;
             border: none;
             display: block;
         }
-        ul{
+
+        ul {
             list-style: none;
             margin: 0 auto;
             /* border:1px solid #000; */
             /* overflow: hidden; */
             position: relative;
         }
-        li{
+
+        li {
             position: absolute;
             border: 1px solid #ccc;
             /* float: left; */
             /* margin: 8px; */
-            width:236px;
-            transition:.5s;
+            width: 236px;
+            transition: .5s;
         }
-        #loading{
+
+        #loading {
             height: 65px;
-            width:100%;
+            width: 100%;
             text-align: center;
             background: #fff;
             position: fixed;
-            bottom:0;
+            bottom: 0;
             display: none;
         }
-        #loading img{
+
+        #loading img {
             display: inline-block;
             height: 65px;
-            width:65px;
+            width: 65px;
         }
     </style>
 </head>
@@ -68,12 +75,26 @@
 </div>
 <script src="jsonp.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    var person={
-        data:111,
-        url:2222
-    }
-    jsonp(person);
+    //可视区宽度
+    const iw = document.documentElement.clientWidth;
+    //li的宽度
+    const liW = 236;
+    //li的间隔
+    const interval=10;
+    //li的实际宽度
+    const act=liW+interval;
+    //获取ul
+    const ul=document.getElementById('ul');
+    //计算页面能放多少个li
+    let len=Math.floor(iw/act);
+    let arrT=[];
+    let arrL=[];
 
+    ul.style.width= act*len-interval+'px';
+
+    for(var i=0;i<len;i++){
+
+    }
 </script>
 </body>
 </html>
